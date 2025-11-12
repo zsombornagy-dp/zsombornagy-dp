@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Zsombor Nagy — Portfolio</title>
 <style>
 :root{
@@ -935,10 +935,172 @@ body{
     flex: 1 1 100%;
   }
 }
+/* === MOBIL LAYOUT FINOMÍTÁS === */
+@media (max-width: 768px) {
+  /* HERO */
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 20px;
+    min-height: 60vh;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .hero-photo {
+    width: 160px;
+    height: 160px;
+    transform: none !important;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-size: clamp(28px, 7vw, 46px);
+    transform: none !important;
+    margin: 0 auto;
+    white-space: normal;
+  }
+
+  .hero-meta {
+    text-align: center;
+    margin-top: 6px;
+    font-size: 14px;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .btn-primary, .btn-secondary {
+    transform: none !important;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* SELECTOR – kisebb, jól olvasható */
+  .work-selector {
+    transform: scale(0.9);
+    width: 90%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 8px 10px;
+  }
+
+  .sel-btn {
+    font-size: 14px;
+    padding: 10px 14px;
+    flex: 1 1 45%;
+    text-align: center;
+  }
+
+  .slider {
+    display: none; /* csúszka elrejtése mobilon */
+  }
+
+  /* PROJECT GRID – 2 kártya / sor */
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px;
+    justify-items: center;
+  }
+
+  .project-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .project-poster {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 2 / 3;
+  }
+
+  .project-title {
+    font-size: 15px;
+  }
+
+  .roles {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sel-btn {
+    flex: 1 1 100%;
+  }
+}
 
 </style>
 </head>
-<body>
+<script>
+(function () {
+  const norm = s => (s || '').trim().toLowerCase();
+  const grid = document.querySelector('.project-grid');
+  if (!grid) return;
+  const allCards = Array.from(grid.querySelectorAll('.project-card'));
+  const buttons = Array.from(document.querySelectorAll('.sel-btn'));
+
+  function teleportFilter(filter) {
+    // Fade out non-matching cards first
+    const visible = [];
+    const hidden = [];
+
+    allCards.forEach(card => {
+      const roles = (card.dataset.roles || '').split(',').map(norm);
+      const match = filter === 'all' || roles.includes(filter);
+      if (match) {
+        visible.push(card);
+      } else {
+        hidden.push(card);
+        card.classList.add('filtered-out');
+      }
+    });
+
+    // After fade-out completes, reorder and fade in visible ones
+    setTimeout(() => {
+      const frag = document.createDocumentFragment();
+      visible.forEach(c => frag.appendChild(c));
+      hidden.forEach(c => frag.appendChild(c));
+      grid.appendChild(frag);
+
+      // small staggered fade-in for visible cards
+      visible.forEach((card, i) => {
+        setTimeout(() => {
+          card.classList.remove('filtered-out');
+        }, i * 70); // 70ms stagger per card
+      });
+    }, 400); // wait for fade-out to finish
+  }
+
+  // Button handlers
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      teleportFilter(btn.dataset.filter || 'all');
+    });
+  });
+
+  // initialize
+  teleportFilter('all');
+})();
+</script>
+
 <body>
 
 <header class="hero" role="banner">
@@ -1610,521 +1772,5 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 </body>
-<script>
-(function () {
-  // normalize helper
-  const norm = s => (s || '').trim().toLowerCase();
-
-  // elements
-  const selector = document.getElementById('selector');
-  const buttons = selector ? Array.from(selector.querySelectorAll('.sel-btn')) : [];
-  const grid = document.getElementById('projectGrid');
-  if (!grid || !buttons.length) return;
-
-  // stable list of all cards in DOM order (we'll reorder by appending nodes)
-  const allCards = Array.from(grid.querySelectorAll('.project-card'));
-
-  // place slider utility (keeps your slider behaviour)
-  const slider = document.getElementById('selector-slider');
-  function placeSliderTo(btn, instant){
-    if(!btn || !slider) return;
-    const rect = selector.getBoundingClientRect();
-    const bRect = btn.getBoundingClientRect();
-    const left = bRect.left - rect.left + 6;
-    const width = bRect.width;
-    slider.style.width = width + 'px';
-    if(instant){
-      slider.style.transition = 'none';
-      slider.style.transform = 'translateX(' + left + 'px)';
-      requestAnimationFrame(()=> slider.style.transition = '');
-    } else {
-      slider.style.transform = 'translateX(' + left + 'px)';
-    }
-  }
-
-  // animate hide -> reorder -> animate show
-  function filterProjects(filter) {
-    // compute visible and hidden arrays (preserve current visual order)
-    const visible = [];
-    const hidden = [];
-    allCards.forEach(card => {
-      const roles = (card.dataset.roles || '').split(',').map(norm);
-      const match = filter === 'all' || roles.includes(filter);
-      (match ? visible : hidden).push(card);
-    });
-
-    // if nothing changed, return
-    const currentlyVisible = Array.from(grid.querySelectorAll('.project-card:not(.is-temp-hidden)')).filter(c => c.style.display !== 'none');
-    const sameSet = visible.length === currentlyVisible.length && visible.every((c,i) => c === currentlyVisible[i]);
-    if (sameSet) return;
-
-    // Step 1: animate exits for hidden cards
-    const exitPromises = hidden.map(card => {
-      return new Promise(resolve => {
-        // if card is already not in grid or already exiting, skip
-        if (!grid.contains(card)) { resolve(); return; }
-        // add exiting class
-        card.classList.add('exiting');
-
-        // ensure transitionend fires by using a timeout guard
-        let done = false;
-        const onEnd = (ev) => {
-          if (ev && (ev.propertyName !== 'opacity' && ev.propertyName !== 'transform')) return;
-          if (done) return;
-          done = true;
-          card.removeEventListener('transitionend', onEnd);
-          resolve(card);
-        };
-        card.addEventListener('transitionend', onEnd);
-
-        // fallback guard (in case transitionend doesn't fire)
-        setTimeout(() => { if (!done) { done = true; card.removeEventListener('transitionend', onEnd); resolve(card); } }, 380);
-      });
-    });
-
-    // after all exits finish, reorder DOM quickly and animate enters
-    Promise.all(exitPromises).then(() => {
-      // remove exiting cards from their positions (we'll append visible first)
-      hidden.forEach(card => {
-        if (grid.contains(card)) {
-          // hide immediately from layout by removing - but keep reference in allCards
-          grid.removeChild(card);
-        }
-      });
-
-      // append visible in order (this will fill gaps naturally)
-      const frag = document.createDocumentFragment();
-      visible.forEach(card => frag.appendChild(card));
-      // append hidden at end to preserve them if you want, but they are removed above
-      grid.appendChild(frag);
-
-      // Step 3: animate entering cards (scale up)
-      visible.forEach((card, i) => {
-        // remove any stale exiting class
-        card.classList.remove('exiting');
-        // Prepare entering animation: start state is .entering (scale up & hidden)
-        card.classList.add('entering');
-        // Force a frame then add 'show' to trigger transition smoothly
-        requestAnimationFrame(() => {
-          // tiny stagger to avoid big reflows all at once
-          setTimeout(() => card.classList.add('show'), 20 + i*28);
-        });
-
-        // cleanup after animation
-        const cleanup = () => {
-          card.classList.remove('entering', 'show');
-          card.removeEventListener('transitionend', cleanup);
-        };
-        card.addEventListener('transitionend', cleanup);
-      });
-    });
-  }
-
-  // wire buttons
-  function activateButton(btn) {
-    buttons.forEach(b => b.classList.toggle('active', b === btn));
-    placeSliderTo(btn, false);
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      activateButton(btn);
-      filterProjects(btn.dataset.filter || 'all');
-    });
-  });
-
-  // init slider + default filter
-  placeSliderTo(buttons[0], true);
-  buttons[0].classList.add('active');
-  filterProjects('all');
-
-  // reposition slider on resize (debounced)
-  let rt;
-  window.addEventListener('resize', ()=> {
-    clearTimeout(rt);
-    rt = setTimeout(()=> {
-      const active = buttons.find(b=> b.classList.contains('active')) || buttons[0];
-      placeSliderTo(active, true);
-    }, 120);
-  });
-
-})();
-</script>
-<script>
-(function () {
-  const norm = s => (s || '').trim().toLowerCase();
-  const grid = document.querySelector('.project-grid');
-  if (!grid) return;
-  const allCards = Array.from(grid.querySelectorAll('.project-card'));
-  const buttons = Array.from(document.querySelectorAll('.sel-btn'));
-
-  function teleportFilter(filter) {
-    // Fade out non-matching cards first
-    const visible = [];
-    const hidden = [];
-
-    allCards.forEach(card => {
-      const roles = (card.dataset.roles || '').split(',').map(norm);
-      const match = filter === 'all' || roles.includes(filter);
-      if (match) {
-        visible.push(card);
-      } else {
-        hidden.push(card);
-        card.classList.add('filtered-out');
-      }
-    });
-
-    // After fade-out completes, reorder and fade in visible ones
-    setTimeout(() => {
-      const frag = document.createDocumentFragment();
-      visible.forEach(c => frag.appendChild(c));
-      hidden.forEach(c => frag.appendChild(c));
-      grid.appendChild(frag);
-
-      // small staggered fade-in for visible cards
-      visible.forEach((card, i) => {
-        setTimeout(() => {
-          card.classList.remove('filtered-out');
-        }, i * 70); // 70ms stagger per card
-      });
-    }, 400); // wait for fade-out to finish
-  }
-
-  // Button handlers
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.toggle('active', b === btn));
-      teleportFilter(btn.dataset.filter || 'all');
-    });
-  });
-
-  // initialize
-  teleportFilter('all');
-})();
-</script>
-<script>
-  // your existing selector red slider JS here...
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const grid = document.querySelector(".project-grid");
-  const cards = Array.from(document.querySelectorAll(".project-card"));
-  const buttons = document.querySelectorAll(".sel-btn");
-
-  function normalize(str) {
-    return (str || "").trim().toLowerCase();
-  }
-
-  function animateFilter(filter) {
-    // store initial positions
-    const firstRects = new Map();
-    cards.forEach(card => firstRects.set(card, card.getBoundingClientRect()));
-
-    // apply filter logic
-    cards.forEach(card => {
-      const roles = (card.dataset.roles || "").split(",").map(normalize);
-      const match = filter === "all" || roles.includes(filter);
-      card.classList.toggle("is-hidden", !match);
-    });
-
-    // force reflow
-    grid.offsetHeight;
-
-    // store new positions
-    const lastRects = new Map();
-    cards.forEach(card => lastRects.set(card, card.getBoundingClientRect()));
-
-    // smooth transition from old to new
-    cards.forEach(card => {
-      const first = firstRects.get(card);
-      const last = lastRects.get(card);
-      if (!first || !last) return;
-      const dx = first.left - last.left;
-      const dy = first.top - last.top;
-      if (dx || dy) {
-        card.style.transform = `translate(${dx}px, ${dy}px)`;
-        requestAnimationFrame(() => {
-          card.style.transition = "transform 0.45s ease, opacity 0.3s ease";
-          card.style.transform = "";
-        });
-      }
-    });
-  }
-
-  // connect filter buttons
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const filter = btn.dataset.filter;
-      animateFilter(filter);
-    });
-  });
-});
-</script>
-<script>
-/* -----------------------
-  email: obfuscated (not printed plainly in HTML)
-   - clicking email icon or footer email opens mailto
--------------------------*/
-(function(){
-  // base64 encoded email to avoid plain text in HTML
-  const b64 = "bmFneS56c21ib3IyMDA4QGdtYWlsLmNvbQ=="; // base64 for "nagy.zsombor2008@gmail.com"
-  function openMail(){
-    const email = atob(b64);
-    window.location.href = "mailto:" + email;
-  }
-  // top button
-  const top = document.getElementById('emailBtnTop');
-  if(top) top.addEventListener('click', openMail);
-  // side icon
-  const side = document.getElementById('emailBtn');
-  if(side) side.addEventListener('click', openMail);
-  // footer (if present)
-  const footerMail = document.getElementById('mailFooter');
-  if(footerMail) footerMail.addEventListener('click', function(e){ e.preventDefault(); openMail(); });
-
-})();
-
-/* -----------------------
-  Selector slider + FLIP filtering
--------------------------*/
-(function(){
-  const selector = document.getElementById('selector');
-  const slider = document.getElementById('selector-slider');
-  const buttons = Array.from(selector.querySelectorAll('.sel-btn'));
-  const grid = document.getElementById('projectGrid');
-  const cards = Array.from(grid.children);
-
-  // place the slider under the active button
-  function placeSliderTo(btn, instant){
-    const rect = selector.getBoundingClientRect();
-    const bRect = btn.getBoundingClientRect();
-    const left = bRect.left - rect.left + 6;
-    const width = bRect.width;
-    slider.style.width = (width) + 'px';
-    slider.style.transform = 'translateX(' + left + 'px)';
-    if(instant){
-      slider.style.transition = 'none';
-      requestAnimationFrame(()=> slider.style.transition = '');
-    }
-  }
-
-  // initialize slider on load
-  placeSliderTo(buttons[0], true);
-  buttons[0].classList.add('active');
-
-  function normalizeRole(r){ return r.trim().toLowerCase(); }
-
-  function applyFilter(filter){
-    // record first rects
-    const firstRects = new Map();
-    cards.forEach(c => { firstRects.set(c, c.getBoundingClientRect()); });
-
-    // update active styles
-    buttons.forEach(b=>{
-      const isActive = (b.dataset.filter === filter);
-      b.classList.toggle('active', isActive);
-      b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    });
-
-    const activeBtn = buttons.find(b => b.dataset.filter === filter) || buttons[0];
-    placeSliderTo(activeBtn, false);
-
-    // show/hide cards
-    cards.forEach(card=>{
-      const roles = (card.dataset.roles || '').split(',').map(normalizeRole);
-      const match = filter === 'all' || roles.includes(filter);
-      card.classList.toggle('is-hidden', !match);
-    });
-
-    // force reflow
-    grid.offsetHeight;
-
-    // record last rects
-    const lastRects = new Map();
-    cards.forEach(c => { lastRects.set(c, c.getBoundingClientRect()); });
-
-    // animate via FLIP
-    cards.forEach(card=>{
-      const first = firstRects.get(card);
-      const last = lastRects.get(card);
-      if(!first || !last) return;
-      const dx = first.left - last.left;
-      const dy = first.top - last.top;
-      const dw = first.width / last.width;
-      const dh = first.height / last.height;
-      if(dx===0 && dy===0 && dw===1 && dh===1) return;
-      card.style.transition = 'none';
-      card.style.transformOrigin = 'top left';
-      card.style.transform = `translate(${dx}px, ${dy}px) scale(${dw}, ${dh})`;
-      requestAnimationFrame(()=>{
-        card.classList.add('flip-anim');
-        card.style.transition = '';
-        card.style.transform = '';
-        const onEnd = (ev)=>{
-          card.classList.remove('flip-anim');
-          card.style.transition = '';
-          card.removeEventListener('transitionend', onEnd);
-        };
-        card.addEventListener('transitionend', onEnd);
-      });
-    });
-  }
-
-  // attach click handlers
-  buttons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      applyFilter(btn.dataset.filter);
-    });
-  });
-
-  // initialize
-  applyFilter('all');
-
-  // keyboard navigation
-  selector.addEventListener('keydown', (e)=>{
-    const idx = buttons.findIndex(b => b.classList.contains('active'));
-    if(e.key === 'ArrowRight'){ buttons[(idx+1)%buttons.length].focus(); buttons[(idx+1)%buttons.length].click(); }
-    if(e.key === 'ArrowLeft'){ buttons[(idx-1+buttons.length)%buttons.length].focus(); buttons[(idx-1+buttons.length)%buttons.length].click(); }
-  });
-
-  // reposition slider on resize
-  let rt;
-  window.addEventListener('resize', ()=>{
-    clearTimeout(rt);
-    rt = setTimeout(()=> {
-      const active = buttons.find(b=> b.classList.contains('active')) || buttons[0];
-      placeSliderTo(active, true);
-      const currentFilter = active.dataset.filter || 'all';
-      applyFilter(currentFilter);
-    }, 120);
-  });
-
-
-})();
-</script>
-<script>
-(function () {
-  const norm = s => (s || '').trim().toLowerCase();
-  const selector = document.getElementById('selector');
-  const buttons = selector ? Array.from(selector.querySelectorAll('.sel-btn')) : [];
-  const grid = document.getElementById('projectGrid');
-  if (!grid || !buttons.length) return;
-  const allCards = Array.from(grid.querySelectorAll('.project-card'));
-  const slider = document.getElementById('selector-slider');
-  const easing = 'cubic-bezier(0.4, 0.0, 0.2, 1)';
-
-  function placeSliderTo(btn, instant) {
-    if (!btn || !slider) return;
-    const rect = selector.getBoundingClientRect();
-    const bRect = btn.getBoundingClientRect();
-    const left = bRect.left - rect.left + 6;
-    const width = bRect.width;
-    slider.style.width = width + 'px';
-    if (instant) {
-      slider.style.transition = 'none';
-      slider.style.transform = `translateX(${left}px)`;
-      requestAnimationFrame(() => (slider.style.transition = ''));
-    } else {
-      slider.style.transform = `translateX(${left}px)`;
-    }
-  }
-
-  function filterProjects(filter) {
-    const visible = new Set();
-    allCards.forEach(card => {
-      const roles = (card.dataset.roles || '').split(',').map(norm);
-      if (filter === 'all' || roles.includes(filter)) visible.add(card);
-    });
-
-    const fadeOutDur = 500;
-    const fadeInDur = 600;
-    const overlapTime = 300; // overlap amount (ms)
-    const delayStep = 1; // 1 ms stagger per card
-
-    // Fade out cards that should disappear
-    allCards.forEach((card, i) => {
-      const show = visible.has(card);
-      if (!show && card.style.display !== 'none') {
-        card.style.transition = `opacity ${fadeOutDur}ms ${easing}, transform ${fadeOutDur}ms ${easing}`;
-        setTimeout(() => {
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.9)';
-          card.style.pointerEvents = 'none';
-        }, i * delayStep);
-        setTimeout(() => (card.style.display = 'none'), fadeOutDur);
-      }
-    });
-
-    // Fade in cards that should appear (overlapping)
-    setTimeout(() => {
-      allCards.forEach((card, i) => {
-        const show = visible.has(card);
-        if (show) {
-          card.style.display = '';
-          card.style.opacity = '0';
-          card.style.transform = 'scale(1.05)'; // start slightly larger
-          card.style.pointerEvents = 'none';
-          card.style.transition = 'none';
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              card.style.transition = `opacity ${fadeInDur}ms ${easing}, transform ${fadeInDur}ms ${easing}`;
-              setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'scale(1)';
-                card.style.pointerEvents = 'auto';
-              }, i * delayStep);
-            });
-          });
-        }
-      });
-    }, fadeOutDur - overlapTime);
-  }
-
-  // Base CSS
-  const style = document.createElement('style');
-  style.textContent = `
-    #projectGrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .project-card {
-      opacity: 1;
-      transform: scale(1);
-      will-change: opacity, transform;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-  `;
-  document.head.appendChild(style);
-
-  // Buttons
-  function activateButton(btn) {
-    buttons.forEach(b => b.classList.toggle('active', b === btn));
-    placeSliderTo(btn, false);
-  }
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      activateButton(btn);
-      filterProjects(btn.dataset.filter || 'all');
-    });
-  });
-
-  // Init
-  placeSliderTo(buttons[0], true);
-  buttons[0].classList.add('active');
-  filterProjects('all');
-
-  // Resize slider
-  let rt;
-  window.addEventListener('resize', () => {
-    clearTimeout(rt);
-    rt = setTimeout(() => {
-      const active =
-        buttons.find(b => b.classList.contains('active')) || buttons[0];
-      placeSliderTo(active, true);
-    }, 120);
-  });
-})();
-</script>
-</body>
 </html>
+
