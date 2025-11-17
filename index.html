@@ -75,13 +75,12 @@ h1 {
   }
 
   /* ---------- GRID ---------- */
-  .projects {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.4rem;
-    text-align: left !important;
-    margin-top: 1rem;
-  }
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.4rem;
+  margin-top: 1rem;
+}
 
   /* ---------- PROJECT CARD ---------- */
   .project {
@@ -185,6 +184,12 @@ h1 {
   .projects {
     grid-template-columns: 1fr !important;
   }
+}
+.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 </style>
