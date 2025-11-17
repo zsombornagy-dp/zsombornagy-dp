@@ -179,65 +179,11 @@ h1 {
       text-shadow: 0 0 0px rgba(255, 69, 58, 0.0);
     }
 }
-/* ------------------------------
-   RESPONSIVE PROJECT GRID
-   ------------------------------ */
 
-/* Tablets */
-@media (min-width: 600px) {
+/* Fix uneven cards on narrow phones */
+@media (max-width: 420px) {
   .projects {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 900px;
-    margin: 0 auto;
-  }
-}
-
-/* Small Laptop */
-@media (min-width: 900px) {
-  body {
-    padding: 2rem 3rem;
-  }
-
-  .projects {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 1200px;
-  }
-
-  .project {
-    padding: 1rem;
-    border-radius: 18px;
-  }
-
-  .poster-wrap {
-    border-radius: 18px;
-  }
-}
-
-/* Large Desktop / 1440p */
-@media (min-width: 1300px) {
-  .projects {
-    grid-template-columns: repeat(5, 1fr);
-    max-width: 1500px;
-  }
-
-  h1 {
-    font-size: 6rem;
-  }
-}
-
-/* Ultra-Wide / 4K Monitors */
-@media (min-width: 1800px) {
-  .projects {
-    grid-template-columns: repeat(6, 1fr);
-    max-width: 1800px;
-  }
-
-  .project {
-    transform: scale(0.92);
-  }
-
-  .project:hover {
-    transform: scale(0.95);
+    grid-template-columns: 1fr !important;
   }
 }
 
@@ -469,4 +415,3 @@ text=Lumiere+Commercial">
 
 </body>
 </html>
-
