@@ -76,11 +76,33 @@ h1 {
 
   /* ---------- GRID ---------- */
 /* Always 2 cards per row on mobile */
+/* Always 2 cards per row on mobile — stays EXACTLY the same */
 .projects {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1rem;
+}
+
+/* Tablet: 3 per row */
+@media (min-width: 600px) {
+  .projects {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Small desktop: 4 per row */
+@media (min-width: 900px) {
+  .projects {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Large desktop: 5 per row */
+@media (min-width: 1200px) {
+  .projects {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
   /* ---------- PROJECT CARD ---------- */
