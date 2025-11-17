@@ -1,1002 +1,471 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zsombor Nagy — Portfolio</title>
+
 <style>
-:root{
-  --orange:#e94322;
-  --bg-dark:#0f0f0f;
-  --muted:#bfbfbf;
-  --card-radius:18px;
-  --max-width:1280px;
-  --badge-bright:rgba(255,255,255,0.12);
-  --ease:cubic-bezier(.2,.9,.28,1);
-  --hero-title-size:clamp(32px,6vw,64px);
-  --hero-single-scale:1.6;
-  --container-padding:clamp(16px,4vw,32px);
-}
-*{box-sizing:border-box;}
-html,body{height:100%;overflow-x:hidden;}
-body{
-  margin:0;background:var(--bg-dark);color:#e6e6e6;
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-  line-height:1.3;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-}
-.container{width:100%;max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding);}
-/* --- HERO SECTION (Photo left, Name split on two lines) --- */
-.hero {
-  background: var(--orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(18px, 4vw, 48px) var(--container-padding);
-}
-.hero-inner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 32px;
-  flex-wrap: wrap;
-  max-width: var(--max-width);
-}
-.hero-left {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  flex: 1;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+  @font-face {
+    font-family: "AvantGardeBold";
+    src: local("ITC Avant Garde Gothic LT Bold"),
+         local("AvantGarde LT Bold"),
+         local("AvantGarde-Bold");
+    font-weight: 700;
+  }
 
-/* photo */
-.hero-photo {
-  width: clamp(140px, 20vw, 240px);
-  height: clamp(140px, 20vw, 240px);
-  border-radius: 16px;
-  background: #111 center/cover no-repeat;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
-  border: 3px solid rgba(255, 255, 255, 0.06);
-  flex: 0 0 auto;
-}
+  :root {
+    --accent: #ff8800;
+    --bg: #0e0e0f;
+    --card: #1a1a1d;
+    --text: #f3f3f3;
+    --subtle: #b7b7b7;
+    --radius: 16px;
+    --red: #ff453a;
+  }
 
-/* title & credit area */
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: left;
-  flex: 1;
-}
-
-.hero-title {
-  margin: 0;
-  font-weight: 900;
-  color: #0b0b0b;
-  font-size: clamp(40px, 8vw, 84px);
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-.hero-title span {
-  display: block;
-}
-
-.hero-meta {
-  color: rgba(11, 11, 11, 0.5);
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 10px;
-  margin-bottom: 12px;
-}
-
-/* buttons */
-.hero-cta {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 18px;
-  border-radius: 22px;
-  font-weight: 700;
-  text-decoration: none;
-  font-size: 15px;
-  cursor: pointer;
-  min-height: 44px;
-}
-
-.btn-primary {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88));
-  color: #f4f4f4;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-}
-.btn-secondary {
-  background: rgba(11, 11, 11, 0.06);
-  color: rgba(11, 11, 11, 0.86);
-  border: 1px solid rgba(11, 11, 11, 0.06);
-}
-
-/* responsive: stack on mobile */
-@media (max-width: 768px) {
-  .hero-inner, .hero-left {
-    flex-direction: column;
-    align-items: center;
+  body {
+    margin: 0;
+    padding: 1.5rem;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     text-align: center;
   }
-  .hero-cta {
+
+  /* ---------- TOP SECTION FONTS ---------- */
+h1 {
+    font-family: "AvantGardeBold", "Inter", system-ui;
+    font-weight: 700;
+    font-size: 4.9rem;
+    margin-bottom: 0.1rem;
+    text-transform: uppercase;
+    color: var(--text);
+
+    letter-spacing: -0.105em;  /* tighter but still readable */
+    word-spacing: 0.28em;      /* keeps natural gap between words */
+}
+
+  .roles {
+    font-family: "AvantGardeBold", "Inter", system-ui;
+    font-weight: 700;
+    color: var(--subtle);
+    margin-bottom: 1.8rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- CONTACT BUTTON ---------- */
+  .contact-btn {
+    display: inline-block;
+    margin: 0 auto 2.2rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: black;
+    background: var(--red);
+    transition: 0.2s ease;
+  }
+
+  .contact-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+
+  /* ---------- GRID ---------- */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4rem;
+    text-align: left !important;
+    margin-top: 1rem;
+  }
+
+  /* ---------- PROJECT CARD ---------- */
+  .project {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 0.7rem;
+    transition: 0.25s ease;
   }
-  .btn {
+
+  .project:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  }
+
+  .poster-wrap {
     width: 100%;
-    max-width: 280px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 2333 / 3500;
+    background: #222;
   }
-}
-.hero-photo{
-  width:calc(var(--hero-title-size)*var(--hero-single-scale));
-  height:calc(var(--hero-title-size)*var(--hero-single-scale));
-  border-radius:14px;background:#111 center/cover no-repeat;
-  flex:0 0 auto;box-shadow:0 10px 28px rgba(0,0,0,0.45);
-  border:3px solid rgba(255,255,255,0.06);overflow:hidden;transform:none;
-}
-.hero-content{min-width:0;}
-.hero-title{
-  margin:0;font-weight:800;color:#0b0b0b;line-height:1;
-  font-size:calc(var(--hero-title-size)*var(--hero-single-scale));
-  text-transform:uppercase;white-space:normal;word-break:break-word;
-}
-.hero-meta{color:rgba(11,11,11,0.48);font-size:13px;font-weight:600;margin-top:8px;}
-.hero-cta{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap;}
-.btn{display:inline-flex;align-items:center;justify-content:center;
-  padding:10px 18px;border-radius:22px;font-weight:700;text-decoration:none;
-  font-size:15px;cursor:pointer;min-height:44px;}
-.btn-primary{background:linear-gradient(180deg,rgba(0,0,0,0.78),rgba(0,0,0,0.88));
-  color:#f4f4f4;border:1px solid rgba(255,255,255,0.03);}
-.btn-secondary{background:rgba(11,11,11,0.06);color:rgba(11,11,11,0.86);
-  border:1px solid rgba(11,11,11,0.06);}
-.hero-right{display:flex;align-items:center;gap:18px;}
-.icon-btn{display:inline-flex;align-items:center;justify-content:center;
-  width:44px;height:44px;border-radius:10px;background:rgba(0,0,0,0.06);
-  border:1px solid rgba(255,255,255,0.06);cursor:pointer;}
-.icon-btn img{width:20px;height:20px;}
-/* --- Work Selector (pill + slider style) --- */
-.work-selector-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 18px 0;
-}
-.work-selector {
-  position: relative;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.10);
-  padding: 6px;
-  border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.08);
-  width: min(760px, 100%);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
-}
-.sel-btn {
-  position: relative;
-  background: transparent;
-  color: #f7f7f7;
-  border: none;
-  padding: 14px 26px;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 999px;
-  z-index: 2;
-  transition: color 0.2s var(--ease);
-}
-.sel-btn.active {
-  color: #0b0b0b;
-}
-.slider {
-  position: absolute;
-  top: 10%;
-  left: -7px;
-  height: calc(100% - 12px);
-  width: 0;
-  background: linear-gradient(90deg, var(--orange), #eb5b39);
-  border-radius: 999px;
-  z-index: 1;
-  transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1), width 0.25s ease-out;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
+
+  .poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .meta {
+    margin-top: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2px;
+  }
+
+  .project-title {
+    font-family: "AvantGardeBold", "Inter", system-ui;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .project-sub {
+    margin: 0.25rem 0 0.7rem;
+    font-size: 0.82rem;
+    color: var(--subtle);
+    line-height: 1.25;
+  }
+
+  /* ---------- PILL ---------- */
+  .pill-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .pill {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    background: #2d2d31;
+    border: 1px solid #3a3a3f;
+    font-weight: 500;
+  }
+
+  /* ---------- STATUS ---------- */
+  .status {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .status.available { color: #4cd964; }
+
+  .status.soon { color: #9c9c9c; }
+
+.status.production {
+    color: var(--red);
+    animation: glowPulse 1.6s infinite ease-in-out;
 }
 
-.projects{padding:32px var(--container-padding);background:var(--bg-dark);}
-.projects-title{
-  color:var(--orange);font-weight:700;font-size:clamp(22px,4vw,34px);
-  margin:0 0 8px;text-align:center;
+@keyframes glowPulse {
+    0% {
+      text-shadow: 0 0 0px rgba(255, 69, 58, 0.0);
+    }
+    50% {
+      text-shadow: 0 0 4px rgba(255, 69, 58, 0.35),
+                   0 0 8px rgba(255, 69, 58, 0.25);
+    }
+    100% {
+      text-shadow: 0 0 0px rgba(255, 69, 58, 0.0);
+    }
 }
-/* --- Project Grid: 2 per row, 1 on mobile --- */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
-  align-items: stretch;
-  margin-top: 20px;
-}
-@media (max-width: 620px) {
-  .project-grid {
-    grid-template-columns: 1fr;
+/* ------------------------------
+   RESPONSIVE PROJECT GRID
+   ------------------------------ */
+
+/* Tablets */
+@media (min-width: 600px) {
+  .projects {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
   }
 }
 
-@media(max-width:1000px){.project-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:620px){.project-grid{grid-template-columns:1fr;}}
-.project-card{
-  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
-  border-radius:16px;padding:12px;display:flex;gap:12px;align-items:flex-start;
-  text-decoration:none;color:inherit;min-height:120px;overflow:hidden;flex-direction:row;
+/* Small Laptop */
+@media (min-width: 900px) {
+  body {
+    padding: 2rem 3rem;
+  }
+
+  .projects {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1200px;
+  }
+
+  .project {
+    padding: 1rem;
+    border-radius: 18px;
+  }
+
+  .poster-wrap {
+    border-radius: 18px;
+  }
 }
-.project-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 18px 44px rgba(0,0,0,0.6);}
-.project-poster{width:150px;flex:0 0 150px;height:220px;border-radius:12px;overflow:hidden;}
-.project-poster img{width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;}
-.project-info{flex:1;display:flex;flex-direction:column;justify-content:space-between;
-  min-height:220px;padding:4px 6px 6px 0;}
-.project-title{font-weight:800;color:#f7f7f7;font-size:18px;margin:0 0 8px;line-height:1.25;}
-.project-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
-.project-meta span{
-  background:rgba(255,255,255,0.04);border-radius:999px;padding:4px 8px;
-  font-size:12px;color:rgba(255,255,255,0.36);border:1px solid rgba(255,255,255,0.05);
+
+/* Large Desktop / 1440p */
+@media (min-width: 1300px) {
+  .projects {
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 1500px;
+  }
+
+  h1 {
+    font-size: 6rem;
+  }
 }
-.roles{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.35;}
-.state{font-size:13px;font-weight:700;align-self:flex-start;margin-top:auto;background:none;padding:0;}
-.state.available{color:rgba(46,112,50,0.85);}
-.state.inprod{color:#ff3b3b;text-shadow:0 0 8px rgba(255,60,60,0.25);}
-.section-separator{width:60%;height:1px;background:rgba(255,255,255,0.12);margin:64px auto 0;border-radius:2px;}
-.footer{background:var(--orange);color:#0b0b0b;padding:36px 24px;text-align:center;}
-.footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:12px;}
-.footer-logo{width:160px;height:56px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0b0b0b;text-transform:uppercase;overflow:hidden;}
-.footer-logo img{height:48px;}
-@media(max-width:768px){
-  .hero{padding:20px 18px;min-height:56vh;}
-  .hero-inner{flex-direction:column;align-items:center;text-align:center;gap:12px;}
-  .hero-left{flex-direction:column;align-items:center;gap:12px;}
-  .hero-photo{width:180px;height:180px;}
-  .hero-title{font-size:clamp(24px,7vw,40px);}
-  .hero-meta{font-size:14px;}
-  .hero-cta{flex-direction:column;width:100%;align-items:center;}
-  .btn{width:100%;max-width:280px;}
-  .work-selector{width:100%;padding:8px;gap:6px;flex-wrap:wrap;}
-  .sel-btn{flex:1 1 45%;min-width:120px;}
-  .slider{display:none;}
-  .project-grid{grid-template-columns:1fr;gap:18px;}
-  .project-card{flex-direction:column;align-items:center;text-align:center;padding:14px;}
-  .project-poster{width:100%;max-width:300px;height:auto;aspect-ratio:2/3;}
-  .project-info{min-height:auto;padding-top:8px;align-items:center;}
-  .footer{padding:24px 16px;}
+
+/* Ultra-Wide / 4K Monitors */
+@media (min-width: 1800px) {
+  .projects {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 1800px;
+  }
+
+  .project {
+    transform: scale(0.92);
+  }
+
+  .project:hover {
+    transform: scale(0.95);
+  }
 }
-@media(max-width:480px){
-  .hero-photo{width:140px;height:140px;}
-  .hero-title{font-size:26px;}
-  .sel-btn{flex:1 1 100%;}
-}
+
 </style>
 </head>
-<script>
-(function () {
-  const norm = s => (s || '').trim().toLowerCase();
-  const grid = document.querySelector('.project-grid');
-  if (!grid) return;
-  const allCards = Array.from(grid.querySelectorAll('.project-card'));
-  const buttons = Array.from(document.querySelectorAll('.sel-btn'));
-
-  function teleportFilter(filter) {
-    // Fade out non-matching cards first
-    const visible = [];
-    const hidden = [];
-
-    allCards.forEach(card => {
-      const roles = (card.dataset.roles || '').split(',').map(norm);
-      const match = filter === 'all' || roles.includes(filter);
-      if (match) {
-        visible.push(card);
-      } else {
-        hidden.push(card);
-        card.classList.add('filtered-out');
-      }
-    });
-
-    // After fade-out completes, reorder and fade in visible ones
-    setTimeout(() => {
-      const frag = document.createDocumentFragment();
-      visible.forEach(c => frag.appendChild(c));
-      hidden.forEach(c => frag.appendChild(c));
-      grid.appendChild(frag);
-
-      // small staggered fade-in for visible cards
-      visible.forEach((card, i) => {
-        setTimeout(() => {
-          card.classList.remove('filtered-out');
-        }, i * 70); // 70ms stagger per card
-      });
-    }, 400); // wait for fade-out to finish
-  }
-
-  // Button handlers
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.toggle('active', b === btn));
-      teleportFilter(btn.dataset.filter || 'all');
-    });
-  });
-
-  // initialize
-  teleportFilter('all');
-})();
-</script>
 
 <body>
 
-<header class="hero" role="banner">
-  <div class="hero-inner">
-    <div class="hero-left">
-      <!-- PROFILE PHOTO (top aligned to title top; height equals scaled title height) -->
-      <div class="hero-photo" id="heroPhoto" style="background-image:url('PortZS.png');" aria-hidden="true"></div>
+<h1>Zsombor Nagy</h1>
+<div class="roles">Cinematographer · Colorist · Director · Writer</div>
 
-      <div>
-        <!-- SINGLE-ROW TITLE SCALED -->
-<h1 class="hero-title">
-  <span>ZSOMBOR</span>
-  <span>NAGY</span>
-</h1>
-        <p class="hero-meta">Cinematographer · Colorist · Writer · Director</p>
+<a class="contact-btn" href="mailto:nagy.zsombor2008@gmail.com">Contact</a>
 
-        <div class="hero-cta" style="margin-top:8px;">
-          <button class="btn btn-primary" type="button" onclick="document.querySelector('#work').scrollIntoView({behavior:'smooth'})">See work</button>
-          <!-- replaced Parallax with "Get in touch" as requested -->
-          <button class="btn btn-secondary" id="emailBtnTop" type="button" title="Get in touch">Get in touch</button>
-        </div>
+<div class="projects">
+
+  <!-- Memory 137 -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="memory137.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Memory 137</h3>
+      <p class="project-sub">Writer · Director · Cinematographer · Colorist</p>
+      <div class="pill-row">
+	<span class="pill">Limited Series</span>
+        <span class="status soon">Coming Soon</span>
       </div>
     </div>
+  </a>
 
-  </div>
-</header>
-
-<main id="work" class="projects" tabindex="-1" role="main" aria-labelledby="work-heading">
-  <div class="projects-inner">
-    <h2 id="work-heading" class="projects-title">Work</h2>
-
-    <!-- selector -->
-    <div class="work-selector-wrap" aria-hidden="false">
-      <div class="work-selector" id="selector">
-        <div class="slider" id="selector-slider" aria-hidden="true"></div>
-        <button class="sel-btn" data-filter="all" aria-pressed="true">ALL</button>
-        <button class="sel-btn" data-filter="cinematographer">CINEMATOGRAPHER</button>
-        <button class="sel-btn" data-filter="colorist">COLORIST</button>
-        <button class="sel-btn" data-filter="writer">WRITER</button>
-        <button class="sel-btn" data-filter="director">DIRECTOR</button>
+  <!-- Other Places -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="otherplaces.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Other Places</h3>
+      <p class="project-sub">Cinematographer · Writer · Director · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status production">In Production</span>
       </div>
     </div>
+  </a>
 
-    <!-- projects grid -->
-    <div class="project-grid" id="projectGrid">
-
-      <!-- Cards: file names --> 
-
-      <a class="project-card" href="https://youtu.be/HH4_8Hf7q78" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="kiralycsel">
-        <div class="project-poster" style="background-image:url('kiralycsel.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Királycsel</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,writer,colorist" data-category="short film" data-state="in production" data-name="butterfly">
-        <div class="project-poster" style="background-image:url('butterfly.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Butterfly</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Writer · Colorist</div>
-          </div>
-          <div class="state inprod">In production</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,writer,director,colorist" data-category="short film" data-state="in production" data-name="otherplaces">
-        <div class="project-poster" style="background-image:url('otherplaces.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Other Places</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Writer · Director · Colorist</div>
-          </div>
-          <div class="state inprod">In production</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
-         data-roles="colorist" data-category="commercial" data-state="available" data-name="lumierecommercial">
-        <div class="project-poster" style="background-image:url('lumierecommercial.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Lumiere Commercial</h3>
-            <div class="project-meta">
-              <span class="badge">COMMERCIAL</span>
-            </div>
-            <div class="roles">Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,writer,director,colorist" data-category="short film" data-state="available" data-name="soundofsilence">
-        <div class="project-poster" style="background-image:url('soundofsilence.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Sound of Silence</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Writer · Director · Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
-         data-roles="writer,colorist,cinematographer" data-category="feature film" data-state="coming soon" data-name="scissors">
-        <div class="project-poster" style="background-image:url('scissors.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Scissors</h3>
-            <div class="project-meta">
-              <span class="badge">FEATURE</span>
-            </div>
-            <div class="roles">Writer · Colorist · Cinematographer</div>
-          </div>
-          <div class="state">Coming soon</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
-         data-roles="writer,director,cinematographer,colorist" data-category="feature film" data-state="coming soon" data-name="19metersoficecoldwater">
-        <div class="project-poster" style="background-image:url('19metersoficecoldwater.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">19 Meters of Ice-cold Water</h3>
-            <div class="project-meta">
-              <span class="badge">FEATURE</span>
-            </div>
-            <div class="roles">Writer · Director · Cinematographer · Colorist</div>
-          </div>
-          <div class="state">Coming soon</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
-         data-roles="writer,cinematographer,colorist" data-category="short film" data-state="in production" data-name="gatewaydrug">
-        <div class="project-poster" style="background-image:url('gatewaydrug.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Gateway Drug</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Writer · Cinematographer · Colorist</div>
-          </div>
-          <div class="state inprod">In production</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://youtu.be/umzQFP7E0X0" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="missingperson">
-        <div class="project-poster" style="background-image:url('missingperson.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Missing person</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://youtu.be/_aFHLQ5UgRU" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="baba">
-        <div class="project-poster" style="background-image:url('baba.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Baba</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://youtu.be/VrxvIIyxhAA" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="loveable">
-        <div class="project-poster" style="background-image:url('loveable.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Loveable</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://youtu.be/jsyEXHc4_8M" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="messy">
-        <div class="project-poster" style="background-image:url('messy.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Messy</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer · Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://youtu.be/nyKgDiAxMeI" target="_blank" rel="noopener noreferrer"
-         data-roles="colorist" data-category="short film" data-state="available" data-name="phertekintroductionmusicvideo">
-        <div class="project-poster" style="background-image:url('phertekintroductionmusicvideo.png');"></div>
-        <div class="project-info">
-          <div>
-            <!-- removed dash from title -->
-            <h3 class="project-title">PH érték Intro</h3>
-            <div class="project-meta">
-              <span class="badge">MUSIC VIDEO</span>
-            </div>
-            <div class="roles">Colorist</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://youtu.be/gSZqLmyROFE" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer" data-category="commercial" data-state="available" data-name="qualityimpactcommercial">
-        <div class="project-poster" style="background-image:url('qualityimpactcommercial.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Quality Impact Commercial</h3>
-            <div class="project-meta">
-              <span class="badge">COMMERCIAL</span>
-            </div>
-            <div class="roles">Cinematographer</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://youtu.be/zR819C3JtVw" target="_blank" rel="noopener noreferrer"
-         data-roles="cinematographer" data-category="short film" data-state="available" data-name="blikkzur">
-        <div class="project-poster" style="background-image:url('blikkzur.png');"></div>
-        <div class="project-info">
-          <div>
-            <h3 class="project-title">Blikkzűr</h3>
-            <div class="project-meta">
-              <span class="badge">SHORT FILM</span>
-            </div>
-            <div class="roles">Cinematographer</div>
-          </div>
-          <div class="state available">Available</div>
-        </div>
-      </a>
-
-    </div><!-- /project-grid -->
-  </div>
-</main>
-
-<div class="section-separator"></div>
-
-<footer class="footer" role="contentinfo">
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <a href="a/index.html" title="Parallax Pictures" aria-label="Parallax Pictures homepage"><img src="sad.png" alt="Parallax Pictures logo"></a>
+  <!-- Sound of Silence -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="soundofsilence.png">
+text=Sound+of+Silence">
     </div>
-    <!-- footer socials removed as requested -->
-    <small>© 2025 Parallax Pictures. All rights reserved.</small>
-  </div>
-</footer>
-<script>
-  // your existing selector red slider JS here...
-</script>
+    <div class="meta">
+      <h3 class="project-title">Sound of Silence</h3>
+      <p class="project-sub">Cinematographer · Writer · Director · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-<!-- paste this new one BELOW it -->
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
-  const selector=document.getElementById('selector');
-  const slider=document.getElementById('selector-slider');
-  const buttons=[...selector.querySelectorAll('.sel-btn')];
-  const grid=document.getElementById('projectGrid');
-  const cards=[...grid.querySelectorAll('.project-card')];
+  <!-- Scissors -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="scissors.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Scissors</h3>
+      <p class="project-sub">Writer · Colorist · Cinematographer</p>
+      <div class="pill-row">
+        <span class="pill">Feature Film</span>
+        <span class="status soon">Coming Soon</span>
+      </div>
+    </div>
+  </a>
 
-  function norm(s){return (s||'').toLowerCase().trim();}
-  function placeSlider(btn){
-    if(!btn||!slider)return;
-    const rect=selector.getBoundingClientRect();
-    const bRect=btn.getBoundingClientRect();
-    slider.style.width=bRect.width+'px';
-    slider.style.transform='translateX('+(bRect.left-rect.left+6)+'px)';
-  }
+  <!-- Királycsel -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="Királycsel Poster (ENG).png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Királycsel</h3>
+      <p class="project-sub">Cinematographer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-  function applyFilter(filter){
-    buttons.forEach(b=>{
-      const active=b.dataset.filter===filter;
-      b.classList.toggle('active',active);
-    });
-    const activeBtn=buttons.find(b=>b.classList.contains('active'))||buttons[0];
-    placeSlider(activeBtn);
-    cards.forEach(c=>{
-      const roles=(c.dataset.roles||'').split(',').map(norm);
-      const show=filter==='all'||roles.includes(filter);
-      c.classList.toggle('is-hidden',!show);
-    });
-  }
+  <!-- Butterfly -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="butterfly.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Butterfly</h3>
+      <p class="project-sub">Cinematographer · Writer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status production">In Production</span>
+      </div>
+    </div>
+  </a>
 
-  buttons.forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.filter)));
-  window.addEventListener('resize',()=>placeSlider(buttons.find(b=>b.classList.contains('active'))));
-  applyFilter('all');
-  placeSlider(buttons[0]);
+  <!-- Missing Person -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="missingperson.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Missing Person</h3>
+      <p class="project-sub">Cinematographer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-  const b64="bmFneS56c21ib3IyMDA4QGdtYWlsLmNvbQ==";
-  function openMail(){window.location.href='mailto:'+atob(b64);}
-  document.getElementById('emailBtnTop').onclick=openMail;
-  document.getElementById('emailBtn').onclick=openMail;
-});
-</script>
+  <!-- Baba -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="baba.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Baba</h3>
+      <p class="project-sub">Cinematographer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-<script>
-/* -----------------------
-  email: obfuscated (not printed plainly in HTML)
-   - clicking email icon or footer email opens mailto
--------------------------*/
-(function(){
-  // base64 encoded email to avoid plain text in HTML
-  const b64 = "bmFneS56c21ib3IyMDA4QGdtYWlsLmNvbQ=="; // base64 for "nagy.zsombor2008@gmail.com"
-  function openMail(){
-    const email = atob(b64);
-    window.location.href = "mailto:" + email;
-  }
-  // top button
-  const top = document.getElementById('emailBtnTop');
-  if(top) top.addEventListener('click', openMail);
-  // side icon
-  const side = document.getElementById('emailBtn');
-  if(side) side.addEventListener('click', openMail);
-  // footer (if present)
-  const footerMail = document.getElementById('mailFooter');
-  if(footerMail) footerMail.addEventListener('click', function(e){ e.preventDefault(); openMail(); });
+  <!-- Loveable -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="loveable.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Loveable</h3>
+      <p class="project-sub">Cinematographer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-})();
+  <!-- Messy -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="messy.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Messy</h3>
+      <p class="project-sub">Cinematographer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-/* -----------------------
-  Selector slider + FLIP filtering
--------------------------*/
-(function(){
-  const selector = document.getElementById('selector');
-  const slider = document.getElementById('selector-slider');
-  const buttons = Array.from(selector.querySelectorAll('.sel-btn'));
-  const grid = document.getElementById('projectGrid');
-  const cards = Array.from(grid.children);
+  <!-- Quality Impact -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="qualityimpact.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Quality Impact Commercial</h3>
+      <p class="project-sub">Cinematographer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Commercial</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-  // place the slider under the active button
-  function placeSliderTo(btn, instant){
-    const rect = selector.getBoundingClientRect();
-    const bRect = btn.getBoundingClientRect();
-    const left = bRect.left - rect.left + 6;
-    const width = bRect.width;
-    slider.style.width = (width) + 'px';
-    slider.style.transform = 'translateX(' + left + 'px)';
-    if(instant){
-      slider.style.transition = 'none';
-      requestAnimationFrame(()=> slider.style.transition = '');
-    }
-  }
+  <!-- Blikkzűr -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="blikkzür.png">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Blikkzűr</h3>
+      <p class="project-sub">Cinematographer</p>
+      <div class="pill-row">
+        <span class="pill">Short Film</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-  // initialize slider on load
-  placeSliderTo(buttons[0], true);
-  buttons[0].classList.add('active');
+  <!-- Lumiere Commercial -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="lumiere.png">
+text=Lumiere+Commercial">
+    </div>
+    <div class="meta">
+      <h3 class="project-title">Lumiere Commercial</h3>
+      <p class="project-sub">Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Commercial</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-  function normalizeRole(r){ return r.trim().toLowerCase(); }
+  <!-- PH Érték Intro -->
+  <a class="project">
+    <div class="poster-wrap">
+<img class="poster" src="phérék.png"> 
+    </div>
+    <div class="meta">
+      <h3 class="project-title">PH Érték Intro</h3>
+      <p class="project-sub">Cinematographer · Colorist</p>
+      <div class="pill-row">
+        <span class="pill">Music Video</span>
+        <span class="status available">Available</span>
+      </div>
+    </div>
+  </a>
 
-  function applyFilter(filter){
-    // record first rects
-    const firstRects = new Map();
-    cards.forEach(c => { firstRects.set(c, c.getBoundingClientRect()); });
-
-    // update active styles
-    buttons.forEach(b=>{
-      const isActive = (b.dataset.filter === filter);
-      b.classList.toggle('active', isActive);
-      b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    });
-
-    const activeBtn = buttons.find(b => b.dataset.filter === filter) || buttons[0];
-    placeSliderTo(activeBtn, false);
-
-    // show/hide cards
-    cards.forEach(card=>{
-      const roles = (card.dataset.roles || '').split(',').map(normalizeRole);
-      const match = filter === 'all' || roles.includes(filter);
-      card.classList.toggle('is-hidden', !match);
-    });
-
-    // force reflow
-    grid.offsetHeight;
-
-    // record last rects
-    const lastRects = new Map();
-    cards.forEach(c => { lastRects.set(c, c.getBoundingClientRect()); });
-
-    // animate via FLIP
-    cards.forEach(card=>{
-      const first = firstRects.get(card);
-      const last = lastRects.get(card);
-      if(!first || !last) return;
-      const dx = first.left - last.left;
-      const dy = first.top - last.top;
-      const dw = first.width / last.width;
-      const dh = first.height / last.height;
-      if(dx===0 && dy===0 && dw===1 && dh===1) return;
-      card.style.transition = 'none';
-      card.style.transformOrigin = 'top left';
-      card.style.transform = `translate(${dx}px, ${dy}px) scale(${dw}, ${dh})`;
-      requestAnimationFrame(()=>{
-        card.classList.add('flip-anim');
-        card.style.transition = '';
-        card.style.transform = '';
-        const onEnd = (ev)=>{
-          card.classList.remove('flip-anim');
-          card.style.transition = '';
-          card.removeEventListener('transitionend', onEnd);
-        };
-        card.addEventListener('transitionend', onEnd);
-      });
-    });
-  }
-
-  // attach click handlers
-  buttons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      applyFilter(btn.dataset.filter);
-    });
-  });
-
-  // initialize
-  applyFilter('all');
-
-  // keyboard navigation
-  selector.addEventListener('keydown', (e)=>{
-    const idx = buttons.findIndex(b => b.classList.contains('active'));
-    if(e.key === 'ArrowRight'){ buttons[(idx+1)%buttons.length].focus(); buttons[(idx+1)%buttons.length].click(); }
-    if(e.key === 'ArrowLeft'){ buttons[(idx-1+buttons.length)%buttons.length].focus(); buttons[(idx-1+buttons.length)%buttons.length].click(); }
-  });
-
-  // reposition slider on resize
-  let rt;
-  window.addEventListener('resize', ()=>{
-    clearTimeout(rt);
-    rt = setTimeout(()=> {
-      const active = buttons.find(b=> b.classList.contains('active')) || buttons[0];
-      placeSliderTo(active, true);
-      const currentFilter = active.dataset.filter || 'all';
-      applyFilter(currentFilter);
-    }, 120);
-  });
-
-
-})();
-</script>
-<script>
-(function () {
-  const norm = s => (s || '').trim().toLowerCase();
-  const grid = document.querySelector('.project-grid');
-  if (!grid) return;
-  const allCards = Array.from(grid.querySelectorAll('.project-card'));
-  const buttons = Array.from(document.querySelectorAll('.sel-btn'));
-
-  function teleportFilter(filter) {
-    // fade out non-matching
-    allCards.forEach(card => {
-      const roles = (card.dataset.roles || '').split(',').map(norm);
-      const match = filter === 'all' || roles.includes(filter);
-      if (!match) {
-        card.classList.add('filtered-out');
-      }
-    });
-
-    // wait for fade-out, then reorder and fade-in new ones
-    setTimeout(() => {
-      // Reorder DOM (visible ones first)
-      const visible = [];
-      const hidden = [];
-      allCards.forEach(card => {
-        const roles = (card.dataset.roles || '').split(',').map(norm);
-        const match = filter === 'all' || roles.includes(filter);
-        (match ? visible : hidden).push(card);
-      });
-
-      const frag = document.createDocumentFragment();
-      visible.forEach(c => frag.appendChild(c));
-      hidden.forEach(c => frag.appendChild(c));
-      grid.appendChild(frag);
-
-      // reveal visible cards (they’ll scale & fade in)
-      visible.forEach(card => {
-        card.classList.remove('filtered-out');
-      });
-    }, 200); // small delay for fade-out timing
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.toggle('active', b === btn));
-      teleportFilter(btn.dataset.filter || 'all');
-    });
-  });
-
-  // initialize
-  teleportFilter('all');
-})();
-</script>
-<script>
-(function () {
-  const norm = s => (s || '').trim().toLowerCase();
-  const selector = document.getElementById('selector');
-  const buttons = selector ? Array.from(selector.querySelectorAll('.sel-btn')) : [];
-  const grid = document.getElementById('projectGrid');
-  if (!grid || !buttons.length) return;
-  const allCards = Array.from(grid.querySelectorAll('.project-card'));
-  const slider = document.getElementById('selector-slider');
-  const easing = 'cubic-bezier(0.4, 0.0, 0.2, 1)';
-
-  function placeSliderTo(btn, instant) {
-    if (!btn || !slider) return;
-    const rect = selector.getBoundingClientRect();
-    const bRect = btn.getBoundingClientRect();
-    const left = bRect.left - rect.left + 6;
-    const width = bRect.width;
-    slider.style.width = width + 'px';
-    if (instant) {
-      slider.style.transition = 'none';
-      slider.style.transform = `translateX(${left}px)`;
-      requestAnimationFrame(() => (slider.style.transition = ''));
-    } else {
-      slider.style.transform = `translateX(${left}px)`;
-    }
-  }
-
-  function filterProjects(filter) {
-    const visible = new Set();
-    allCards.forEach(card => {
-      const roles = (card.dataset.roles || '').split(',').map(norm);
-      if (filter === 'all' || roles.includes(filter)) visible.add(card);
-    });
-
-    const fadeOutDur = 500;
-    const fadeInDur = 600;
-    const overlapTime = 300; // overlap amount (ms)
-    const delayStep = 1; // 1 ms stagger per card
-
-    // Fade out cards that should disappear
-    allCards.forEach((card, i) => {
-      const show = visible.has(card);
-      if (!show && card.style.display !== 'none') {
-        card.style.transition = `opacity ${fadeOutDur}ms ${easing}, transform ${fadeOutDur}ms ${easing}`;
-        setTimeout(() => {
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.9)';
-          card.style.pointerEvents = 'none';
-        }, i * delayStep);
-        setTimeout(() => (card.style.display = 'none'), fadeOutDur);
-      }
-    });
-
-    // Fade in cards that should appear (overlapping)
-    setTimeout(() => {
-      allCards.forEach((card, i) => {
-        const show = visible.has(card);
-        if (show) {
-          card.style.display = '';
-          card.style.opacity = '0';
-          card.style.transform = 'scale(1.05)'; // start slightly larger
-          card.style.pointerEvents = 'none';
-          card.style.transition = 'none';
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              card.style.transition = `opacity ${fadeInDur}ms ${easing}, transform ${fadeInDur}ms ${easing}`;
-              setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'scale(1)';
-                card.style.pointerEvents = 'auto';
-              }, i * delayStep);
-            });
-          });
-        }
-      });
-    }, fadeOutDur - overlapTime);
-  }
-
-  // Base CSS
-  const style = document.createElement('style');
-  style.textContent = `
-    #projectGrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .project-card {
-      opacity: 1;
-      transform: scale(1);
-      will-change: opacity, transform;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-  `;
-  document.head.appendChild(style);
-
-  // Buttons
-  function activateButton(btn) {
-    buttons.forEach(b => b.classList.toggle('active', b === btn));
-    placeSliderTo(btn, false);
-  }
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      activateButton(btn);
-      filterProjects(btn.dataset.filter || 'all');
-    });
-  });
-
-  // Init
-  placeSliderTo(buttons[0], true);
-  buttons[0].classList.add('active');
-  filterProjects('all');
-
-  // Resize slider
-  let rt;
-  window.addEventListener('resize', () => {
-    clearTimeout(rt);
-    rt = setTimeout(() => {
-      const active =
-        buttons.find(b => b.classList.contains('active')) || buttons[0];
-      placeSliderTo(active, true);
-    }, 120);
-  });
-})();
-</script>
-
-
-</script>
-</script>
+</div>
 
 </body>
 </html>
-
